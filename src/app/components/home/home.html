@@ -1,1 +1,88 @@
-<p>home works!</p>
+<div class="table-controls">
+
+  <!-- Search -->
+  <input
+    type="text"
+    class="search-input"
+    placeholder="Search employees..."
+    [value]="searchTerm"
+    (input)="onSearch($event)"
+  />
+
+  <!-- Department filter -->
+  <select
+    class="filter-select"
+    [value]="selectedDepartment"
+    (change)="onDepartmentChange($event)"
+  >
+    <option value="all">All Departments</option>
+
+    @for (department of departments; track department) {
+      <option [value]="department">
+        {{ department }}
+      </option>
+    }
+  </select>
+
+  <!-- Status filter -->
+  <select
+    class="filter-select"
+    [value]="selectedStatus"
+    (change)="onStatusChange($event)"
+  >
+    <option value="all">All Statuses</option>
+    <option value="Active">Active</option>
+    <option value="Inactive">Inactive</option>
+    <option value="On Leave">On Leave</option>
+  </select>
+
+</div>
+
+<div class="table-div">
+  <table   
+  class="table"
+  matSort
+  [matSortActive]="sortState.active"
+  [matSortDirection]="sortState.direction"
+  (matSortChange)="onSortChange($event)">
+  <thead>
+    <tr>
+      <th mat-sort-header="Display_ID" scope="col">DisplayId</th>
+      <th mat-sort-header="Name" scope="col">Name</th>
+      <th mat-sort-header="Department" scope="col">Department</th>
+      <th mat-sort-header="Email" scope="col">Email</th>
+      <th mat-sort-header="Status" scope="col">status</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of paginatedEmployees; track item.Display_ID) {
+      <tr>
+        <td>{{item.Display_ID}}</td>
+        <td>{{item.Name}}</td>
+        <td>{{item.Department}}</td>
+        <td>{{item.Email}}</td>
+        <td><span
+          class="status"
+          [ngClass]="{
+            'status-active':item.Status === 'Active',
+            'status-inactive':item.Status === 'Inactive',
+            'status-leave': item.Status === 'On Leave'
+          }"
+          >
+          </span>
+          {{item.Status}}
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+</div>
+<mat-paginator
+  [length]="employees.length"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex"
+  [pageSizeOptions]="[5, 10, 20]"
+  (page)="onPageChange($event)"
+  showFirstLastButtons
+  aria-label="Select employee page">
+</mat-paginator>

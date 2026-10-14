@@ -1,8 +1,7 @@
-
 {
   "employees": [
-
     {
+      "id": "EMP001",
       "Display_ID": "EMP001",
       "Name": "John Kamau",
       "Email": "john.kamau@example.com",
@@ -10,6 +9,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP002",
       "Display_ID": "EMP002",
       "Name": "Grace Wanjiku",
       "Email": "grace.wanjiku@example.com",
@@ -17,6 +17,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP003",
       "Display_ID": "EMP003",
       "Name": "Brian Otieno",
       "Email": "brian.otieno@example.com",
@@ -24,6 +25,7 @@
       "Status": "Inactive"
     },
     {
+      "id": "EMP004",
       "Display_ID": "EMP004",
       "Name": "Faith Njeri",
       "Email": "faith.njeri@example.com",
@@ -31,6 +33,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP005",
       "Display_ID": "EMP005",
       "Name": "Kevin Mwangi",
       "Email": "kevin.mwangi@example.com",
@@ -38,6 +41,7 @@
       "Status": "On Leave"
     },
     {
+      "id": "EMP006",
       "Display_ID": "EMP006",
       "Name": "Mercy Achieng",
       "Email": "mercy.achieng@example.com",
@@ -45,6 +49,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP007",
       "Display_ID": "EMP007",
       "Name": "David Kiptoo",
       "Email": "david.kiptoo@example.com",
@@ -52,6 +57,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP008",
       "Display_ID": "EMP008",
       "Name": "Esther Muthoni",
       "Email": "esther.muthoni@example.com",
@@ -59,6 +65,7 @@
       "Status": "Inactive"
     },
     {
+      "id": "EMP009",
       "Display_ID": "EMP009",
       "Name": "Samuel Ochieng",
       "Email": "samuel.ochieng@example.com",
@@ -66,6 +73,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP010",
       "Display_ID": "EMP010",
       "Name": "Lydia Chebet",
       "Email": "lydia.chebet@example.com",
@@ -73,6 +81,7 @@
       "Status": "On Leave"
     },
     {
+      "id": "EMP011",
       "Display_ID": "EMP011",
       "Name": "Peter Mutua",
       "Email": "peter.mutua@example.com",
@@ -80,6 +89,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP012",
       "Display_ID": "EMP012",
       "Name": "Alice Chebet",
       "Email": "alice.chebet@example.com",
@@ -87,6 +97,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP013",
       "Display_ID": "EMP013",
       "Name": "Michael Ouma",
       "Email": "michael.ouma@example.com",
@@ -94,6 +105,7 @@
       "Status": "Inactive"
     },
     {
+      "id": "EMP014",
       "Display_ID": "EMP014",
       "Name": "Susan Naliaka",
       "Email": "susan.naliaka@example.com",
@@ -101,6 +113,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP015",
       "Display_ID": "EMP015",
       "Name": "Daniel Kipchoge",
       "Email": "daniel.kipchoge@example.com",
@@ -108,6 +121,7 @@
       "Status": "On Leave"
     },
     {
+      "id": "EMP016",
       "Display_ID": "EMP016",
       "Name": "Mary Atieno",
       "Email": "mary.atieno@example.com",
@@ -115,6 +129,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP017",
       "Display_ID": "EMP017",
       "Name": "Joseph Kariuki",
       "Email": "joseph.kariuki@example.com",
@@ -122,6 +137,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP018",
       "Display_ID": "EMP018",
       "Name": "Ann Wambui",
       "Email": "ann.wambui@example.com",
@@ -129,6 +145,7 @@
       "Status": "Inactive"
     },
     {
+      "id": "EMP019",
       "Display_ID": "EMP019",
       "Name": "Samuel Maina",
       "Email": "samuel.maina@example.com",
@@ -136,6 +153,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP020",
       "Display_ID": "EMP020",
       "Name": "Catherine Akinyi",
       "Email": "catherine.akinyi@example.com",
@@ -143,6 +161,7 @@
       "Status": "On Leave"
     },
     {
+      "id": "EMP021",
       "Display_ID": "EMP021",
       "Name": "Francis Mwende",
       "Email": "francis.mwende@example.com",
@@ -150,6 +169,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP022",
       "Display_ID": "EMP022",
       "Name": "Beatrice Nyambura",
       "Email": "beatrice.nyambura@example.com",
@@ -157,6 +177,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP023",
       "Display_ID": "EMP023",
       "Name": "Patrick Omondi",
       "Email": "patrick.omondi@example.com",
@@ -164,6 +185,7 @@
       "Status": "Inactive"
     },
     {
+      "id": "EMP024",
       "Display_ID": "EMP024",
       "Name": "Diana Jepkosgei",
       "Email": "diana.jepkosgei@example.com",
@@ -171,6 +193,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP025",
       "Display_ID": "EMP025",
       "Name": "George Musyoka",
       "Email": "george.musyoka@example.com",
@@ -178,6 +201,7 @@
       "Status": "On Leave"
     },
     {
+      "id": "EMP026",
       "Display_ID": "EMP026",
       "Name": "Elizabeth Moraa",
       "Email": "elizabeth.moraa@example.com",
@@ -185,6 +209,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP027",
       "Display_ID": "EMP027",
       "Name": "Stephen Barasa",
       "Email": "stephen.barasa@example.com",
@@ -192,6 +217,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP028",
       "Display_ID": "EMP028",
       "Name": "Nancy Wairimu",
       "Email": "nancy.wairimu@example.com",
@@ -199,6 +225,7 @@
       "Status": "Inactive"
     },
     {
+      "id": "EMP029",
       "Display_ID": "EMP029",
       "Name": "Charles Kibet",
       "Email": "charles.kibet@example.com",
@@ -206,6 +233,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP030",
       "Display_ID": "EMP030",
       "Name": "Janet Muthoni",
       "Email": "janet.muthoni@example.com",
@@ -213,6 +241,7 @@
       "Status": "On Leave"
     },
     {
+      "id": "EMP031",
       "Display_ID": "EMP031",
       "Name": "Victor Odhiambo",
       "Email": "victor.odhiambo@example.com",
@@ -220,6 +249,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP032",
       "Display_ID": "EMP032",
       "Name": "Caroline Wekesa",
       "Email": "caroline.wekesa@example.com",
@@ -227,6 +257,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP033",
       "Display_ID": "EMP033",
       "Name": "Anthony Kimani",
       "Email": "anthony.kimani@example.com",
@@ -234,6 +265,7 @@
       "Status": "Inactive"
     },
     {
+      "id": "EMP034",
       "Display_ID": "EMP034",
       "Name": "Ruth Adhiambo",
       "Email": "ruth.adhiambo@example.com",
@@ -241,6 +273,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP035",
       "Display_ID": "EMP035",
       "Name": "Martin Njoroge",
       "Email": "martin.njoroge@example.com",
@@ -248,6 +281,7 @@
       "Status": "On Leave"
     },
     {
+      "id": "EMP036",
       "Display_ID": "EMP036",
       "Name": "Joyce Chepkemoi",
       "Email": "joyce.chepkemoi@example.com",
@@ -255,6 +289,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP037",
       "Display_ID": "EMP037",
       "Name": "Dennis Were",
       "Email": "dennis.were@example.com",
@@ -262,6 +297,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP038",
       "Display_ID": "EMP038",
       "Name": "Monica Wanjala",
       "Email": "monica.wanjala@example.com",
@@ -269,6 +305,7 @@
       "Status": "Inactive"
     },
     {
+      "id": "EMP039",
       "Display_ID": "EMP039",
       "Name": "Edwin Macharia",
       "Email": "edwin.macharia@example.com",
@@ -276,6 +313,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP040",
       "Display_ID": "EMP040",
       "Name": "Purity Nasimiyu",
       "Email": "purity.nasimiyu@example.com",
@@ -283,6 +321,7 @@
       "Status": "On Leave"
     },
     {
+      "id": "EMP041",
       "Display_ID": "EMP041",
       "Name": "Robert Muli",
       "Email": "robert.muli@example.com",
@@ -290,6 +329,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP042",
       "Display_ID": "EMP042",
       "Name": "Veronica Auma",
       "Email": "veronica.auma@example.com",
@@ -297,6 +337,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP043",
       "Display_ID": "EMP043",
       "Name": "Collins Kiprotich",
       "Email": "collins.kiprotich@example.com",
@@ -304,6 +345,7 @@
       "Status": "Inactive"
     },
     {
+      "id": "EMP044",
       "Display_ID": "EMP044",
       "Name": "Esther Nyokabi",
       "Email": "esther.nyokabi@example.com",
@@ -311,6 +353,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP045",
       "Display_ID": "EMP045",
       "Name": "Brian Musau",
       "Email": "brian.musau@example.com",
@@ -318,6 +361,7 @@
       "Status": "On Leave"
     },
     {
+      "id": "EMP046",
       "Display_ID": "EMP046",
       "Name": "Lilian Jepchirchir",
       "Email": "lilian.jepchirchir@example.com",
@@ -325,6 +369,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP047",
       "Display_ID": "EMP047",
       "Name": "Moses Karanja",
       "Email": "moses.karanja@example.com",
@@ -332,6 +377,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP048",
       "Display_ID": "EMP048",
       "Name": "Irene Akinyi",
       "Email": "irene.akinyi@example.com",
@@ -339,6 +385,7 @@
       "Status": "Inactive"
     },
     {
+      "id": "EMP049",
       "Display_ID": "EMP049",
       "Name": "Caleb Kiprono",
       "Email": "caleb.kiprono@example.com",
@@ -346,6 +393,7 @@
       "Status": "Active"
     },
     {
+      "id": "EMP050",
       "Display_ID": "EMP050",
       "Name": "Faith Wambura",
       "Email": "faith.wambura@example.com",

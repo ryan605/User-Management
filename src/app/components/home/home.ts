@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import {MatPaginator,PageEvent} from '@angular/material/paginator';
 import {MatSortModule,Sort} from '@angular/material/sort';
+import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder,Validator } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { Employee } from '../../interface/employee';
 
 @Component({
   selector: 'app-home',
-  imports: [NgClass, MatPaginator, MatSortModule],
+  imports: [NgClass, MatPaginator, MatSortModule,ReactiveFormsModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -49,6 +51,179 @@ selectedStatus = 'all';
 get departments() {
   return [...new Set(this.employees.map(emp => emp.Department))];
 }
+
+  private fb = inject(FormBuilder);
+
+  // Form for adding and editing employees
+  employeeForm = this.fb.nonNullable.group({
+    Name: ['', [Validators.required, Validators.minLength(2)]],
+    Email: ['', [Validators.required, Validators.email]],
+    Department: ['', Validators.required],
+    Status: ['Active' as Employee['Status'], Validators.required]
+  });
+
+  modalMode: 'add' | 'edit' | 'view' | null = null;
+  selectedEmployee: Employee | null = null;
+  saving = false;
+  formError = '';
+
+  // Open the Add User form
+  openAddForm(): void {
+    this.selectedEmployee = null;
+    this.formError = '';
+    this.employeeForm.reset({
+      Name: '',
+      Email: '',
+      Department: '',
+      Status: 'Active'
+    });
+    this.modalMode = 'add';
+  }
+
+  // Open the Edit User form
+  openEditForm(employee: Employee): void {
+    this.selectedEmployee = employee;
+    this.formError = '';
+
+    this.employeeForm.reset({
+      Name: employee.Name,
+      Email: employee.Email,
+      Department: employee.Department,
+      Status: employee.Status
+    });
+
+    this.modalMode = 'edit';
+  }
+
+  // View employee details
+  openViewDetails(employee: Employee): void {
+    this.selectedEmployee = employee;
+    this.modalMode = 'view';
+  }
+
+  closeModal(): void {
+    this.modalMode = null;
+    this.selectedEmployee = null;
+    this.formError = '';
+  }
+
+  // Mark fields as touched to display validation errors
+  private markFormTouched(): void {
+    this.employeeForm.markAllAsTouched();
+  }
+
+  // Generate the next employee ID
+  private generateEmployeeId(): string {
+    const highestId = this.employees.reduce((max, employee) => {
+      const number = Number(employee.Display_ID.replace('EMP', ''));
+      return Number.isFinite(number) ? Math.max(max, number) : max;
+    }, 0);
+
+    return `EMP${String(highestId + 1).padStart(3, '0')}`;
+  }
+
+  // Add or update an employee
+  saveEmployee(): void {
+    this.markFormTouched();
+    this.formError = '';
+
+    if (this.employeeForm.invalid) {
+      return;
+    }
+
+    const value = this.employeeForm.getRawValue();
+
+    // Check for duplicate email, excluding the employee being edited
+    const duplicateEmail = this.employees.some(employee =>
+      employee.Email.trim().toLowerCase() ===
+        value.Email.trim().toLowerCase() &&
+      employee.id !== this.selectedEmployee?.id
+    );
+
+    if (duplicateEmail) {
+      this.employeeForm.controls.Email.setErrors({
+        ...this.employeeForm.controls.Email.errors,
+        duplicate: true
+      });
+      this.employeeForm.controls.Email.markAsTouched();
+      return;
+    }
+
+    this.saving = true;
+
+    if (this.modalMode === 'add') {
+      const id = this.generateEmployeeId();
+
+      const newEmployee: Employee = {
+        id,
+        Display_ID: id,
+        ...value
+      };
+
+      this.http.post<Employee>(this.apiUrl, newEmployee).subscribe({
+        next: () => {
+          this.loadEmployees();
+          this.closeModal();
+          this.saving = false;
+          this.pageIndex = 0;
+        },
+        error: () => {
+          this.formError = 'Unable to add employee. Please try again.';
+          this.saving = false;
+        }
+      });
+    } else if (
+      this.modalMode === 'edit' &&
+      this.selectedEmployee
+    ) {
+      const updatedEmployee: Employee = {
+        ...this.selectedEmployee,
+        ...value
+      };
+
+      this.http.put<Employee>(
+        `${this.apiUrl}/${encodeURIComponent(this.selectedEmployee.id)}`,
+        updatedEmployee
+      ).subscribe({
+        next: () => {
+          this.loadEmployees();
+          this.closeModal();
+          this.saving = false;
+        },
+        error: () => {
+          this.formError = 'Unable to update employee. Please try again.';
+          this.saving = false;
+        }
+      });
+    }
+  }
+
+  // Delete with confirmation
+  deleteEmployee(employee: Employee): void {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete ${employee.Name}?`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+
+    this.http.delete(
+      `${this.apiUrl}/${encodeURIComponent(employee.id)}`
+    ).subscribe({
+      next: () => {
+        this.loadEmployees();
+
+        if (this.pageIndex > 0 && this.paginatedEmployees.length <= 1) {
+          this.pageIndex--;
+        }
+      },
+      error: (error) => {
+        console.error('Error deleting employee:', error);
+        this.formError = 'Unable to delete employee. Please try again.';
+      }
+    });
+  }
 
 // Filter employees using search and dropdown filters
 get filteredEmployees() {
@@ -129,288 +304,5 @@ get paginatedEmployees() {
     this.sortState = sort;
     this.pageIndex = 0;
   }
-
-  // employees= [
-  //   {
-  //     Display_ID: 'EMP011',
-  //     Name: 'Peter Mutua',
-  //     Email: 'peter.mutua@example.com',
-  //     Department: 'Software Engineering',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP012',
-  //     Name: 'Alice Chebet',
-  //     Email: 'alice.chebet@example.com',
-  //     Department: 'Human Resources',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP013',
-  //     Name: 'Michael Ouma',
-  //     Email: 'michael.ouma@example.com',
-  //     Department: 'Finance',
-  //     Status: 'Inactive'
-  //   },
-  //   {
-  //     Display_ID: 'EMP014',
-  //     Name: 'Susan Naliaka',
-  //     Email: 'susan.naliaka@example.com',
-  //     Department: 'IT Support',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP015',
-  //     Name: 'Daniel Kipchoge',
-  //     Email: 'daniel.kipchoge@example.com',
-  //     Department: 'Marketing',
-  //     Status: 'On Leave'
-  //   },
-  //   {
-  //     Display_ID: 'EMP016',
-  //     Name: 'Mary Atieno',
-  //     Email: 'mary.atieno@example.com',
-  //     Department: 'Cybersecurity',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP017',
-  //     Name: 'Joseph Kariuki',
-  //     Email: 'joseph.kariuki@example.com',
-  //     Department: 'Data Analytics',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP018',
-  //     Name: 'Ann Wambui',
-  //     Email: 'ann.wambui@example.com',
-  //     Department: 'Customer Service',
-  //     Status: 'Inactive'
-  //   },
-  //   {
-  //     Display_ID: 'EMP019',
-  //     Name: 'Samuel Maina',
-  //     Email: 'samuel.maina@example.com',
-  //     Department: 'Operations',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP020',
-  //     Name: 'Catherine Akinyi',
-  //     Email: 'catherine.akinyi@example.com',
-  //     Department: 'Software Engineering',
-  //     Status: 'On Leave'
-  //   },
-  //   {
-  //     Display_ID: 'EMP021',
-  //     Name: 'Francis Mwende',
-  //     Email: 'francis.mwende@example.com',
-  //     Department: 'Human Resources',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP022',
-  //     Name: 'Beatrice Nyambura',
-  //     Email: 'beatrice.nyambura@example.com',
-  //     Department: 'Finance',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP023',
-  //     Name: 'Patrick Omondi',
-  //     Email: 'patrick.omondi@example.com',
-  //     Department: 'IT Support',
-  //     Status: 'Inactive'
-  //   },
-  //   {
-  //     Display_ID: 'EMP024',
-  //     Name: 'Diana Jepkosgei',
-  //     Email: 'diana.jepkosgei@example.com',
-  //     Department: 'Marketing',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP025',
-  //     Name: 'George Musyoka',
-  //     Email: 'george.musyoka@example.com',
-  //     Department: 'Cybersecurity',
-  //     Status: 'On Leave'
-  //   },
-  //   {
-  //     Display_ID: 'EMP026',
-  //     Name: 'Elizabeth Moraa',
-  //     Email: 'elizabeth.moraa@example.com',
-  //     Department: 'Data Analytics',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP027',
-  //     Name: 'Stephen Barasa',
-  //     Email: 'stephen.barasa@example.com',
-  //     Department: 'Customer Service',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP028',
-  //     Name: 'Nancy Wairimu',
-  //     Email: 'nancy.wairimu@example.com',
-  //     Department: 'Operations',
-  //     Status: 'Inactive'
-  //   },
-  //   {
-  //     Display_ID: 'EMP029',
-  //     Name: 'Charles Kibet',
-  //     Email: 'charles.kibet@example.com',
-  //     Department: 'Software Engineering',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP030',
-  //     Name: 'Janet Muthoni',
-  //     Email: 'janet.muthoni@example.com',
-  //     Department: 'Human Resources',
-  //     Status: 'On Leave'
-  //   },
-  //   {
-  //     Display_ID: 'EMP031',
-  //     Name: 'Victor Odhiambo',
-  //     Email: 'victor.odhiambo@example.com',
-  //     Department: 'Finance',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP032',
-  //     Name: 'Caroline Wekesa',
-  //     Email: 'caroline.wekesa@example.com',
-  //     Department: 'IT Support',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP033',
-  //     Name: 'Anthony Kimani',
-  //     Email: 'anthony.kimani@example.com',
-  //     Department: 'Marketing',
-  //     Status: 'Inactive'
-  //   },
-  //   {
-  //     Display_ID: 'EMP034',
-  //     Name: 'Ruth Adhiambo',
-  //     Email: 'ruth.adhiambo@example.com',
-  //     Department: 'Cybersecurity',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP035',
-  //     Name: 'Martin Njoroge',
-  //     Email: 'martin.njoroge@example.com',
-  //     Department: 'Data Analytics',
-  //     Status: 'On Leave'
-  //   },
-  //   {
-  //     Display_ID: 'EMP036',
-  //     Name: 'Joyce Chepkemoi',
-  //     Email: 'joyce.chepkemoi@example.com',
-  //     Department: 'Customer Service',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP037',
-  //     Name: 'Dennis Were',
-  //     Email: 'dennis.were@example.com',
-  //     Department: 'Operations',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP038',
-  //     Name: 'Monica Wanjala',
-  //     Email: 'monica.wanjala@example.com',
-  //     Department: 'Software Engineering',
-  //     Status: 'Inactive'
-  //   },
-  //   {
-  //     Display_ID: 'EMP039',
-  //     Name: 'Edwin Macharia',
-  //     Email: 'edwin.macharia@example.com',
-  //     Department: 'Human Resources',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP040',
-  //     Name: 'Purity Nasimiyu',
-  //     Email: 'purity.nasimiyu@example.com',
-  //     Department: 'Finance',
-  //     Status: 'On Leave'
-  //   },
-  //   {
-  //     Display_ID: 'EMP041',
-  //     Name: 'Robert Muli',
-  //     Email: 'robert.muli@example.com',
-  //     Department: 'IT Support',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP042',
-  //     Name: 'Veronica Auma',
-  //     Email: 'veronica.auma@example.com',
-  //     Department: 'Marketing',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP043',
-  //     Name: 'Collins Kiprotich',
-  //     Email: 'collins.kiprotich@example.com',
-  //     Department: 'Cybersecurity',
-  //     Status: 'Inactive'
-  //   },
-  //   {
-  //     Display_ID: 'EMP044',
-  //     Name: 'Esther Nyokabi',
-  //     Email: 'esther.nyokabi@example.com',
-  //     Department: 'Data Analytics',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP045',
-  //     Name: 'Brian Musau',
-  //     Email: 'brian.musau@example.com',
-  //     Department: 'Customer Service',
-  //     Status: 'On Leave'
-  //   },
-  //   {
-  //     Display_ID: 'EMP046',
-  //     Name: 'Lilian Jepchirchir',
-  //     Email: 'lilian.jepchirchir@example.com',
-  //     Department: 'Operations',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP047',
-  //     Name: 'Moses Karanja',
-  //     Email: 'moses.karanja@example.com',
-  //     Department: 'Software Engineering',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP048',
-  //     Name: 'Irene Akinyi',
-  //     Email: 'irene.akinyi@example.com',
-  //     Department: 'Human Resources',
-  //     Status: 'Inactive'
-  //   },
-  //   {
-  //     Display_ID: 'EMP049',
-  //     Name: 'Caleb Kiprono',
-  //     Email: 'caleb.kiprono@example.com',
-  //     Department: 'Finance',
-  //     Status: 'Active'
-  //   },
-  //   {
-  //     Display_ID: 'EMP050',
-  //     Name: 'Faith Wambura',
-  //     Email: 'faith.wambura@example.com',
-  //     Department: 'IT Support',
-  //     Status: 'On Leave'
-  //   }
-  // ];
 }
 

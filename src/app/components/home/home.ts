@@ -1,7 +1,10 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
 import {MatPaginator,PageEvent} from '@angular/material/paginator';
 import {MatSortModule,Sort} from '@angular/material/sort';
+import { finalize } from 'rxjs';
+import { Employee } from '../../interface/employee';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +12,33 @@ import {MatSortModule,Sort} from '@angular/material/sort';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
+
 export class Home {
+  http = inject(HttpClient);
+  private apiUrl = 'http://localhost:3000/employees';
+  employees: Employee[] = []
+  loading = false
+  errorMessage = ''
+    constructor() {
+    this.loadEmployees();
+  }
+    loadEmployees(): void {
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.http.get<Employee[]>(this.apiUrl)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: (data) => {
+          this.employees = data;
+        },
+        error: (error) => {
+          console.error('Error fetching employees:', error);
+          this.errorMessage =
+            'Unable to load employees. Please check JSON Server.';
+        }
+      });
+  }
   // Search
 searchTerm = '';
 // Filters
@@ -101,287 +130,287 @@ get paginatedEmployees() {
     this.pageIndex = 0;
   }
 
-  employees= [
-    {
-      Display_ID: 'EMP011',
-      Name: 'Peter Mutua',
-      Email: 'peter.mutua@example.com',
-      Department: 'Software Engineering',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP012',
-      Name: 'Alice Chebet',
-      Email: 'alice.chebet@example.com',
-      Department: 'Human Resources',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP013',
-      Name: 'Michael Ouma',
-      Email: 'michael.ouma@example.com',
-      Department: 'Finance',
-      Status: 'Inactive'
-    },
-    {
-      Display_ID: 'EMP014',
-      Name: 'Susan Naliaka',
-      Email: 'susan.naliaka@example.com',
-      Department: 'IT Support',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP015',
-      Name: 'Daniel Kipchoge',
-      Email: 'daniel.kipchoge@example.com',
-      Department: 'Marketing',
-      Status: 'On Leave'
-    },
-    {
-      Display_ID: 'EMP016',
-      Name: 'Mary Atieno',
-      Email: 'mary.atieno@example.com',
-      Department: 'Cybersecurity',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP017',
-      Name: 'Joseph Kariuki',
-      Email: 'joseph.kariuki@example.com',
-      Department: 'Data Analytics',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP018',
-      Name: 'Ann Wambui',
-      Email: 'ann.wambui@example.com',
-      Department: 'Customer Service',
-      Status: 'Inactive'
-    },
-    {
-      Display_ID: 'EMP019',
-      Name: 'Samuel Maina',
-      Email: 'samuel.maina@example.com',
-      Department: 'Operations',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP020',
-      Name: 'Catherine Akinyi',
-      Email: 'catherine.akinyi@example.com',
-      Department: 'Software Engineering',
-      Status: 'On Leave'
-    },
-    {
-      Display_ID: 'EMP021',
-      Name: 'Francis Mwende',
-      Email: 'francis.mwende@example.com',
-      Department: 'Human Resources',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP022',
-      Name: 'Beatrice Nyambura',
-      Email: 'beatrice.nyambura@example.com',
-      Department: 'Finance',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP023',
-      Name: 'Patrick Omondi',
-      Email: 'patrick.omondi@example.com',
-      Department: 'IT Support',
-      Status: 'Inactive'
-    },
-    {
-      Display_ID: 'EMP024',
-      Name: 'Diana Jepkosgei',
-      Email: 'diana.jepkosgei@example.com',
-      Department: 'Marketing',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP025',
-      Name: 'George Musyoka',
-      Email: 'george.musyoka@example.com',
-      Department: 'Cybersecurity',
-      Status: 'On Leave'
-    },
-    {
-      Display_ID: 'EMP026',
-      Name: 'Elizabeth Moraa',
-      Email: 'elizabeth.moraa@example.com',
-      Department: 'Data Analytics',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP027',
-      Name: 'Stephen Barasa',
-      Email: 'stephen.barasa@example.com',
-      Department: 'Customer Service',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP028',
-      Name: 'Nancy Wairimu',
-      Email: 'nancy.wairimu@example.com',
-      Department: 'Operations',
-      Status: 'Inactive'
-    },
-    {
-      Display_ID: 'EMP029',
-      Name: 'Charles Kibet',
-      Email: 'charles.kibet@example.com',
-      Department: 'Software Engineering',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP030',
-      Name: 'Janet Muthoni',
-      Email: 'janet.muthoni@example.com',
-      Department: 'Human Resources',
-      Status: 'On Leave'
-    },
-    {
-      Display_ID: 'EMP031',
-      Name: 'Victor Odhiambo',
-      Email: 'victor.odhiambo@example.com',
-      Department: 'Finance',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP032',
-      Name: 'Caroline Wekesa',
-      Email: 'caroline.wekesa@example.com',
-      Department: 'IT Support',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP033',
-      Name: 'Anthony Kimani',
-      Email: 'anthony.kimani@example.com',
-      Department: 'Marketing',
-      Status: 'Inactive'
-    },
-    {
-      Display_ID: 'EMP034',
-      Name: 'Ruth Adhiambo',
-      Email: 'ruth.adhiambo@example.com',
-      Department: 'Cybersecurity',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP035',
-      Name: 'Martin Njoroge',
-      Email: 'martin.njoroge@example.com',
-      Department: 'Data Analytics',
-      Status: 'On Leave'
-    },
-    {
-      Display_ID: 'EMP036',
-      Name: 'Joyce Chepkemoi',
-      Email: 'joyce.chepkemoi@example.com',
-      Department: 'Customer Service',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP037',
-      Name: 'Dennis Were',
-      Email: 'dennis.were@example.com',
-      Department: 'Operations',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP038',
-      Name: 'Monica Wanjala',
-      Email: 'monica.wanjala@example.com',
-      Department: 'Software Engineering',
-      Status: 'Inactive'
-    },
-    {
-      Display_ID: 'EMP039',
-      Name: 'Edwin Macharia',
-      Email: 'edwin.macharia@example.com',
-      Department: 'Human Resources',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP040',
-      Name: 'Purity Nasimiyu',
-      Email: 'purity.nasimiyu@example.com',
-      Department: 'Finance',
-      Status: 'On Leave'
-    },
-    {
-      Display_ID: 'EMP041',
-      Name: 'Robert Muli',
-      Email: 'robert.muli@example.com',
-      Department: 'IT Support',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP042',
-      Name: 'Veronica Auma',
-      Email: 'veronica.auma@example.com',
-      Department: 'Marketing',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP043',
-      Name: 'Collins Kiprotich',
-      Email: 'collins.kiprotich@example.com',
-      Department: 'Cybersecurity',
-      Status: 'Inactive'
-    },
-    {
-      Display_ID: 'EMP044',
-      Name: 'Esther Nyokabi',
-      Email: 'esther.nyokabi@example.com',
-      Department: 'Data Analytics',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP045',
-      Name: 'Brian Musau',
-      Email: 'brian.musau@example.com',
-      Department: 'Customer Service',
-      Status: 'On Leave'
-    },
-    {
-      Display_ID: 'EMP046',
-      Name: 'Lilian Jepchirchir',
-      Email: 'lilian.jepchirchir@example.com',
-      Department: 'Operations',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP047',
-      Name: 'Moses Karanja',
-      Email: 'moses.karanja@example.com',
-      Department: 'Software Engineering',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP048',
-      Name: 'Irene Akinyi',
-      Email: 'irene.akinyi@example.com',
-      Department: 'Human Resources',
-      Status: 'Inactive'
-    },
-    {
-      Display_ID: 'EMP049',
-      Name: 'Caleb Kiprono',
-      Email: 'caleb.kiprono@example.com',
-      Department: 'Finance',
-      Status: 'Active'
-    },
-    {
-      Display_ID: 'EMP050',
-      Name: 'Faith Wambura',
-      Email: 'faith.wambura@example.com',
-      Department: 'IT Support',
-      Status: 'On Leave'
-    }
-  ];
+  // employees= [
+  //   {
+  //     Display_ID: 'EMP011',
+  //     Name: 'Peter Mutua',
+  //     Email: 'peter.mutua@example.com',
+  //     Department: 'Software Engineering',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP012',
+  //     Name: 'Alice Chebet',
+  //     Email: 'alice.chebet@example.com',
+  //     Department: 'Human Resources',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP013',
+  //     Name: 'Michael Ouma',
+  //     Email: 'michael.ouma@example.com',
+  //     Department: 'Finance',
+  //     Status: 'Inactive'
+  //   },
+  //   {
+  //     Display_ID: 'EMP014',
+  //     Name: 'Susan Naliaka',
+  //     Email: 'susan.naliaka@example.com',
+  //     Department: 'IT Support',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP015',
+  //     Name: 'Daniel Kipchoge',
+  //     Email: 'daniel.kipchoge@example.com',
+  //     Department: 'Marketing',
+  //     Status: 'On Leave'
+  //   },
+  //   {
+  //     Display_ID: 'EMP016',
+  //     Name: 'Mary Atieno',
+  //     Email: 'mary.atieno@example.com',
+  //     Department: 'Cybersecurity',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP017',
+  //     Name: 'Joseph Kariuki',
+  //     Email: 'joseph.kariuki@example.com',
+  //     Department: 'Data Analytics',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP018',
+  //     Name: 'Ann Wambui',
+  //     Email: 'ann.wambui@example.com',
+  //     Department: 'Customer Service',
+  //     Status: 'Inactive'
+  //   },
+  //   {
+  //     Display_ID: 'EMP019',
+  //     Name: 'Samuel Maina',
+  //     Email: 'samuel.maina@example.com',
+  //     Department: 'Operations',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP020',
+  //     Name: 'Catherine Akinyi',
+  //     Email: 'catherine.akinyi@example.com',
+  //     Department: 'Software Engineering',
+  //     Status: 'On Leave'
+  //   },
+  //   {
+  //     Display_ID: 'EMP021',
+  //     Name: 'Francis Mwende',
+  //     Email: 'francis.mwende@example.com',
+  //     Department: 'Human Resources',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP022',
+  //     Name: 'Beatrice Nyambura',
+  //     Email: 'beatrice.nyambura@example.com',
+  //     Department: 'Finance',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP023',
+  //     Name: 'Patrick Omondi',
+  //     Email: 'patrick.omondi@example.com',
+  //     Department: 'IT Support',
+  //     Status: 'Inactive'
+  //   },
+  //   {
+  //     Display_ID: 'EMP024',
+  //     Name: 'Diana Jepkosgei',
+  //     Email: 'diana.jepkosgei@example.com',
+  //     Department: 'Marketing',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP025',
+  //     Name: 'George Musyoka',
+  //     Email: 'george.musyoka@example.com',
+  //     Department: 'Cybersecurity',
+  //     Status: 'On Leave'
+  //   },
+  //   {
+  //     Display_ID: 'EMP026',
+  //     Name: 'Elizabeth Moraa',
+  //     Email: 'elizabeth.moraa@example.com',
+  //     Department: 'Data Analytics',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP027',
+  //     Name: 'Stephen Barasa',
+  //     Email: 'stephen.barasa@example.com',
+  //     Department: 'Customer Service',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP028',
+  //     Name: 'Nancy Wairimu',
+  //     Email: 'nancy.wairimu@example.com',
+  //     Department: 'Operations',
+  //     Status: 'Inactive'
+  //   },
+  //   {
+  //     Display_ID: 'EMP029',
+  //     Name: 'Charles Kibet',
+  //     Email: 'charles.kibet@example.com',
+  //     Department: 'Software Engineering',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP030',
+  //     Name: 'Janet Muthoni',
+  //     Email: 'janet.muthoni@example.com',
+  //     Department: 'Human Resources',
+  //     Status: 'On Leave'
+  //   },
+  //   {
+  //     Display_ID: 'EMP031',
+  //     Name: 'Victor Odhiambo',
+  //     Email: 'victor.odhiambo@example.com',
+  //     Department: 'Finance',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP032',
+  //     Name: 'Caroline Wekesa',
+  //     Email: 'caroline.wekesa@example.com',
+  //     Department: 'IT Support',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP033',
+  //     Name: 'Anthony Kimani',
+  //     Email: 'anthony.kimani@example.com',
+  //     Department: 'Marketing',
+  //     Status: 'Inactive'
+  //   },
+  //   {
+  //     Display_ID: 'EMP034',
+  //     Name: 'Ruth Adhiambo',
+  //     Email: 'ruth.adhiambo@example.com',
+  //     Department: 'Cybersecurity',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP035',
+  //     Name: 'Martin Njoroge',
+  //     Email: 'martin.njoroge@example.com',
+  //     Department: 'Data Analytics',
+  //     Status: 'On Leave'
+  //   },
+  //   {
+  //     Display_ID: 'EMP036',
+  //     Name: 'Joyce Chepkemoi',
+  //     Email: 'joyce.chepkemoi@example.com',
+  //     Department: 'Customer Service',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP037',
+  //     Name: 'Dennis Were',
+  //     Email: 'dennis.were@example.com',
+  //     Department: 'Operations',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP038',
+  //     Name: 'Monica Wanjala',
+  //     Email: 'monica.wanjala@example.com',
+  //     Department: 'Software Engineering',
+  //     Status: 'Inactive'
+  //   },
+  //   {
+  //     Display_ID: 'EMP039',
+  //     Name: 'Edwin Macharia',
+  //     Email: 'edwin.macharia@example.com',
+  //     Department: 'Human Resources',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP040',
+  //     Name: 'Purity Nasimiyu',
+  //     Email: 'purity.nasimiyu@example.com',
+  //     Department: 'Finance',
+  //     Status: 'On Leave'
+  //   },
+  //   {
+  //     Display_ID: 'EMP041',
+  //     Name: 'Robert Muli',
+  //     Email: 'robert.muli@example.com',
+  //     Department: 'IT Support',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP042',
+  //     Name: 'Veronica Auma',
+  //     Email: 'veronica.auma@example.com',
+  //     Department: 'Marketing',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP043',
+  //     Name: 'Collins Kiprotich',
+  //     Email: 'collins.kiprotich@example.com',
+  //     Department: 'Cybersecurity',
+  //     Status: 'Inactive'
+  //   },
+  //   {
+  //     Display_ID: 'EMP044',
+  //     Name: 'Esther Nyokabi',
+  //     Email: 'esther.nyokabi@example.com',
+  //     Department: 'Data Analytics',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP045',
+  //     Name: 'Brian Musau',
+  //     Email: 'brian.musau@example.com',
+  //     Department: 'Customer Service',
+  //     Status: 'On Leave'
+  //   },
+  //   {
+  //     Display_ID: 'EMP046',
+  //     Name: 'Lilian Jepchirchir',
+  //     Email: 'lilian.jepchirchir@example.com',
+  //     Department: 'Operations',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP047',
+  //     Name: 'Moses Karanja',
+  //     Email: 'moses.karanja@example.com',
+  //     Department: 'Software Engineering',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP048',
+  //     Name: 'Irene Akinyi',
+  //     Email: 'irene.akinyi@example.com',
+  //     Department: 'Human Resources',
+  //     Status: 'Inactive'
+  //   },
+  //   {
+  //     Display_ID: 'EMP049',
+  //     Name: 'Caleb Kiprono',
+  //     Email: 'caleb.kiprono@example.com',
+  //     Department: 'Finance',
+  //     Status: 'Active'
+  //   },
+  //   {
+  //     Display_ID: 'EMP050',
+  //     Name: 'Faith Wambura',
+  //     Email: 'faith.wambura@example.com',
+  //     Department: 'IT Support',
+  //     Status: 'On Leave'
+  //   }
+  // ];
 }
 

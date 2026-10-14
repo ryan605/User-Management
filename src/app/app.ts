@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
 import { Home } from './components/home/home';
+
 
 @Component({
   selector: 'app-root',
@@ -11,3 +11,4 @@ import { Home } from './components/home/home';
 export class App {
   protected readonly title = signal('User-Management');
 }
+ 

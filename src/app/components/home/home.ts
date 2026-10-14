@@ -24,22 +24,20 @@ export class Home {
     constructor() {
     this.loadEmployees();
   }
-    loadEmployees(): void {
-    this.loading = true;
-    this.errorMessage = '';
+  getEmployees() {
+    return this.http.get<Employee[]>(this.apiUrl);
+  }
 
-    this.http.get<Employee[]>(this.apiUrl)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        next: (data) => {
-          this.employees = data;
-        },
-        error: (error) => {
-          console.error('Error fetching employees:', error);
-          this.errorMessage =
-            'Unable to load employees. Please check JSON Server.';
-        }
-      });
+  loadEmployees(): void {
+    this.http.get<Employee[]>(this.apiUrl).subscribe({
+      next: (data) => {
+        this.employees = data;
+      },
+      error: (error) => {
+        console.error('Failed to load employees:', error);
+        this.formError = 'Unable to load employees.';
+      }
+    });
   }
   // Search
 searchTerm = '';

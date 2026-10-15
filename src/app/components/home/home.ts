@@ -17,7 +17,7 @@ import { Employee } from '../../interface/employee';
 
 export class Home {
   http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/employees';
+  private apiUrl = 'http://localhost:3001/employees';
   employees: Employee[] = []
   loading = false
   errorMessage = ''

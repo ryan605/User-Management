@@ -399,14 +399,6 @@
       "Email": "faith.wambura@example.com",
       "Department": "IT Support",
       "Status": "On Leave"
-    },
-    {
-      "id": "ippnz89QKDI",
-      "Display_ID": "EMP051",
-      "Name": "Ryan langat",
-      "Email": "test@gmail.com",
-      "Department": "IT Support",
-      "Status": "On Leave"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

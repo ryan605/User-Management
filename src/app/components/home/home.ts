@@ -262,7 +262,7 @@ onStatusChange(event: Event) {
   this.pageIndex = 0;
 }
 
-  pageSize = 15;
+  pageSize = 10;
   pageIndex = 0;
 
   sortState: Sort = {

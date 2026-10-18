@@ -1,35 +1,22 @@
 <div class="table-controls">
 
   <!-- Search -->
-  <input
-    type="text"
-    class="search-input"
-    placeholder="Search employees..."
-    [value]="searchTerm"
-    (input)="onSearch($event)"
-  />
+  <input type="text" class="search-input" placeholder="Search employees..." [value]="searchTerm"
+    (input)="onSearch($event)" />
 
   <!-- Department filter -->
-  <select
-    class="filter-select"
-    [value]="selectedDepartment"
-    (change)="onDepartmentChange($event)"
-  >
+  <select class="filter-select" [value]="selectedDepartment" (change)="onDepartmentChange($event)">
     <option value="all">All Departments</option>
 
     @for (department of departments; track department) {
-      <option [value]="department">
-        {{ department }}
-      </option>
+    <option [value]="department">
+      {{ department }}
+    </option>
     }
   </select>
 
   <!-- Status filter -->
-  <select
-    class="filter-select"
-    [value]="selectedStatus"
-    (change)="onStatusChange($event)"
-  >
+  <select class="filter-select" [value]="selectedStatus" (change)="onStatusChange($event)">
     <option value="all">All Statuses</option>
     <option value="Active">Active</option>
     <option value="Inactive">Inactive</option>
@@ -41,212 +28,184 @@
   + Add User
 </button>
 <div class="table-div">
-  <table   
-  class="table"
-  matSort
-  [matSortActive]="sortState.active"
-  [matSortDirection]="sortState.direction"
-  (matSortChange)="onSortChange($event)">
-  <thead>
-    <tr>
-      <th mat-sort-header="Display_ID" scope="col">DisplayId</th>
-      <th mat-sort-header="Name" scope="col">Name</th>
-      <th mat-sort-header="Department" scope="col">Department</th>
-      <th mat-sort-header="Email" scope="col">Email</th>
-      <th mat-sort-header="Status" scope="col">status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-   @for (item of paginatedEmployees; track item.Display_ID) {
-  <tr>
-    <td>{{ item.Display_ID }}</td>
-    <td>{{ item.Name }}</td>
-    <td>{{ item.Department }}</td>
-    <td>{{ item.Email }}</td>
+  <table class="table" matSort [matSortActive]="sortState.active" [matSortDirection]="sortState.direction"
+    (matSortChange)="onSortChange($event)">
+    <thead>
+      <tr>
+        <th mat-sort-header="Display_ID" scope="col">DisplayId</th>
+        <th mat-sort-header="Name" scope="col">Name</th>
+        <th mat-sort-header="Department" scope="col">Department</th>
+        <th mat-sort-header="Email" scope="col">Email</th>
+        <th mat-sort-header="Status" scope="col">status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of paginatedEmployees; track item.Display_ID) {
+      <tr>
+        <td>{{ item.Display_ID }}</td>
+        <td>{{ item.Name }}</td>
+        <td>{{ item.Department }}</td>
+        <td>{{ item.Email }}</td>
 
-    <td>
-      <span
-        class="status"
-        [ngClass]="{
-          'status-active': item.Status === 'Active',
-          'status-inactive': item.Status === 'Inactive',
+        <td>
+          <span class="status" [ngClass]="{
+          'status-active': item.Status === 'Active',                         
           'status-leave': item.Status === 'On Leave'
         }">
-      </span>
-      {{ item.Status }}
-    </td>
+          </span>
+          {{ item.Status }}
+        </td>
 
-    <td class="action-buttons">
-      <button
-        type="button"
-        class="btn-view"
-        (click)="openViewDetails(item)">
-        View
-      </button>
+        <td class="action-buttons">
+          <button type="button" class="btn-view" (click)="openViewDetails(item)">
+            View
+          </button>
 
-      <button
-        type="button"
-        class="btn-edit"
-        (click)="openEditForm(item)">
-        Edit
-      </button>
+          <button type="button" class="btn-edit" (click)="openEditForm(item)">
+            Edit
+          </button>
 
-      <button
-        type="button"
-        class="btn-delete"
-        (click)="deleteEmployee(item)">
-        Delete
-      </button>
-    </td>
-  </tr>
+          <button type="button" class="btn-delete" (click)="deleteEmployee(item)">
+            Delete
+          </button>
+        </td>
+      </tr>
 
-    }
-  </tbody>
-</table>
+      }
+    </tbody>
+  </table>
 </div>
 @if (modalMode) {
-  <div class="modal-backdrop">
-    <section class="employee-modal" role="dialog" aria-modal="true">
+<div class="modal-backdrop">
+  <section class="employee-modal" role="dialog" aria-modal="true">
 
-      <div class="modal-header">
-        <h2>
-          @if (modalMode === 'add') {
-            Add User
-          } @else if (modalMode === 'edit') {
-            Edit User
-          } @else {
-            Employee Details
-          }
-        </h2>
+    <div class="modal-header">
+      <h2>
+        @if (modalMode === 'add') {
+        Add User
+        } @else if (modalMode === 'edit') {
+        Edit User
+        } @else {
+        Employee Details
+        }
+      </h2>
 
-        <button type="button" (click)="closeModal()" aria-label="Close">
-          &times;
-        </button>
+      <button type="button" (click)="closeModal()" aria-label="Close">
+        &times;
+      </button>
+    </div>
+
+    @if (modalMode === 'view' && selectedEmployee) {
+    <div class="employee-details">
+      <p><strong>Employee ID:</strong> {{ selectedEmployee.Display_ID }}</p>
+      <p><strong>Full Name:</strong> {{ selectedEmployee.Name }}</p>
+      <p><strong>Email:</strong> {{ selectedEmployee.Email }}</p>
+      <p><strong>Department:</strong> {{ selectedEmployee.Department }}</p>
+      <p><strong>Status:</strong> {{ selectedEmployee.Status }}</p>
+
+      <button type="button" class="btn-edit" (click)="openEditForm(selectedEmployee)">
+        Edit Employee
+      </button>
+    </div>
+    } @else {
+    <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()" novalidate>
+
+      <div class="form-field">
+        <label for="fullName">Full Name</label>
+        <input id="fullName" type="text" formControlName="Name" placeholder="Enter full name" />
+
+        @if (employeeForm.controls.Name.touched &&
+        employeeForm.controls.Name.hasError('required')) {
+        <small class="field-error">Full name is required.</small>
+        }
+
+        @if (employeeForm.controls.Name.touched &&
+        employeeForm.controls.Name.hasError('minlength')) {
+        <small class="field-error">
+          Name must contain at least 2 characters.
+        </small>
+        }
       </div>
 
-      @if (modalMode === 'view' && selectedEmployee) {
-        <div class="employee-details">
-          <p><strong>Employee ID:</strong> {{ selectedEmployee.Display_ID }}</p>
-          <p><strong>Full Name:</strong> {{ selectedEmployee.Name }}</p>
-          <p><strong>Email:</strong> {{ selectedEmployee.Email }}</p>
-          <p><strong>Department:</strong> {{ selectedEmployee.Department }}</p>
-          <p><strong>Status:</strong> {{ selectedEmployee.Status }}</p>
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="Email" placeholder="name@example.com" />
 
-          <button type="button" class="btn-edit"
-            (click)="openEditForm(selectedEmployee)">
-            Edit Employee
-          </button>
-        </div>
-      } @else {
-        <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()"
-          novalidate>
+        @if (employeeForm.controls.Email.touched &&
+        employeeForm.controls.Email.hasError('required')) {
+        <small class="field-error">Email is required.</small>
+        }
 
-          <div class="form-field">
-            <label for="fullName">Full Name</label>
-            <input id="fullName" type="text" formControlName="Name"
-              placeholder="Enter full name" />
+        @if (employeeForm.controls.Email.touched &&
+        employeeForm.controls.Email.hasError('email')) {
+        <small class="field-error">
+          Enter a valid email address.
+        </small>
+        }
 
-            @if (employeeForm.controls.Name.touched &&
-                 employeeForm.controls.Name.hasError('required')) {
-              <small class="field-error">Full name is required.</small>
-            }
+        @if (employeeForm.controls.Email.touched &&
+        employeeForm.controls.Email.hasError('duplicate')) {
+        <small class="field-error">
+          This email address is already registered.
+        </small>
+        }
+      </div>
 
-            @if (employeeForm.controls.Name.touched &&
-                 employeeForm.controls.Name.hasError('minlength')) {
-              <small class="field-error">
-                Name must contain at least 2 characters.
-              </small>
-            }
-          </div>
-
-          <div class="form-field">
-            <label for="email">Email</label>
-            <input id="email" type="email" formControlName="Email"
-              placeholder="name@example.com" />
-
-            @if (employeeForm.controls.Email.touched &&
-                 employeeForm.controls.Email.hasError('required')) {
-              <small class="field-error">Email is required.</small>
-            }
-
-            @if (employeeForm.controls.Email.touched &&
-                 employeeForm.controls.Email.hasError('email')) {
-              <small class="field-error">
-                Enter a valid email address.
-              </small>
-            }
-
-            @if (employeeForm.controls.Email.touched &&
-                 employeeForm.controls.Email.hasError('duplicate')) {
-              <small class="field-error">
-                This email address is already registered.
-              </small>
-            }
-          </div>
-
-          <div class="form-field">
-            <label for="department">Department</label>
-            <select id="department" formControlName="Department">
-              <option value="">Select department</option>
-              @for (department of departments; track department) {
-                <option [value]="department">{{ department }}</option>
-              }
-            </select>
-
-            @if (employeeForm.controls.Department.touched &&
-                 employeeForm.controls.Department.hasError('required')) {
-              <small class="field-error">Select a department.</small>
-            }
-          </div>
-
-          <div class="form-field">
-            <label for="status">Status</label>
-            <select id="status" formControlName="Status">
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-              <option value="On Leave">On Leave</option>
-            </select>
-
-            @if (employeeForm.controls.Status.touched &&
-                 employeeForm.controls.Status.hasError('required')) {
-              <small class="field-error">Select a status.</small>
-            }
-          </div>
-
-          @if (formError) {
-            <p class="field-error">{{ formError }}</p>
+      <div class="form-field">
+        <label for="department">Department</label>
+        <select id="department" formControlName="Department">
+          <option value="">Select department</option>
+          @for (department of departments; track department) {
+          <option [value]="department">{{ department }}</option>
           }
+        </select>
 
-          <div class="modal-actions">
-            <button type="button" class="btn-cancel"
-              (click)="closeModal()">
-              Cancel
-            </button>
+        @if (employeeForm.controls.Department.touched &&
+        employeeForm.controls.Department.hasError('required')) {
+        <small class="field-error">Select a department.</small>
+        }
+      </div>
 
-            <button type="submit" class="btn-add"
-              [disabled]="saving">
-              @if (saving) {
-                Saving...
-              } @else if (modalMode === 'add') {
-                Add User
-              } @else {
-                Save Changes
-              }
-            </button>
-          </div>
-        </form>
+      <div class="form-field">
+        <label for="status">Status</label>
+        <select id="status" formControlName="Status">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+          <option value="On Leave">On Leave</option>
+        </select>
+
+        @if (employeeForm.controls.Status.touched &&
+        employeeForm.controls.Status.hasError('required')) {
+        <small class="field-error">Select a status.</small>
+        }
+      </div>
+
+      @if (formError) {
+      <p class="field-error">{{ formError }}</p>
       }
-    </section>
-  </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          Cancel
+        </button>
+
+        <button type="submit" class="btn-add" [disabled]="saving">
+          @if (saving) {
+          Saving...
+          } @else if (modalMode === 'add') {
+          Add User
+          } @else {
+          Save Changes
+          }
+        </button>
+      </div>
+    </form>
+    }
+  </section>
+</div>
 }
 
-<mat-paginator
-  [length]="employees.length"
-  [pageSize]="pageSize"
-  [pageIndex]="pageIndex"
-  [pageSizeOptions]="[5, 10, 20]"
-  (page)="onPageChange($event)"
-  showFirstLastButtons
-  aria-label="Select employee page">
+<mat-paginator [length]="employees.length" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 20]"
+  (page)="onPageChange($event)" showFirstLastButtons aria-label="Select employee page">
 </mat-paginator>

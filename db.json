@@ -1,10 +1,12 @@
+
 {
   "employees": [
     {
       "id": "EMP001",
       "Display_ID": "EMP001",
       "Name": "John Kamau",
-      "Email": "john.kamau@example.com",
+      "Email": "test@gmail.com",
+      "Password": "password",
       "Department": "Software Engineering",
       "Status": "Active"
     },
@@ -12,7 +14,8 @@
       "id": "EMP002",
       "Display_ID": "EMP002",
       "Name": "Grace Wanjiku",
-      "Email": "grace.wanjiku@example.com",
+      "Email": "grace.wanjiku@gmail.com",
+      "Password": "Gw4@rT8nL3",
       "Department": "Human Resources",
       "Status": "Active"
     },
@@ -20,7 +23,8 @@
       "id": "EMP003",
       "Display_ID": "EMP003",
       "Name": "Brian Otieno",
-      "Email": "brian.otieno@example.com",
+      "Email": "brian.otieno@gmail.com",
+      "Password": "Bo9#xK5pM2",
       "Department": "Finance",
       "Status": "Inactive"
     },
@@ -28,7 +32,8 @@
       "id": "EMP004",
       "Display_ID": "EMP004",
       "Name": "Faith Njeri",
-      "Email": "faith.njeri@example.com",
+      "Email": "faith.njeri@gmail.com",
+      "Password": "Fn6!bR3wY8",
       "Department": "IT Support",
       "Status": "Active"
     },
@@ -36,7 +41,8 @@
       "id": "EMP005",
       "Display_ID": "EMP005",
       "Name": "Kevin Mwangi",
-      "Email": "kevin.mwangi@example.com",
+      "Email": "kevin.mwangi@gmail.com",
+      "Password": "Km2@zP7dH4",
       "Department": "Software Engineering",
       "Status": "On Leave"
     },
@@ -44,7 +50,8 @@
       "id": "EMP006",
       "Display_ID": "EMP006",
       "Name": "Mercy Achieng",
-      "Email": "mercy.achieng@example.com",
+      "Email": "mercy.achieng@gmail.com",
+      "Password": "Ma8#tL4qN6",
       "Department": "Marketing",
       "Status": "Active"
     },
@@ -52,7 +59,8 @@
       "id": "EMP007",
       "Display_ID": "EMP007",
       "Name": "David Kiptoo",
-      "Email": "david.kiptoo@example.com",
+      "Email": "david.kiptoo@gmail.com",
+      "Password": "Dk5!vW9sC2",
       "Department": "Cybersecurity",
       "Status": "Active"
     },
@@ -60,7 +68,8 @@
       "id": "EMP008",
       "Display_ID": "EMP008",
       "Name": "Esther Muthoni",
-      "Email": "esther.muthoni@example.com",
+      "Email": "esther.muthoni@gmail.com",
+      "Password": "Em3@jR8xF7",
       "Department": "Customer Service",
       "Status": "Inactive"
     },
@@ -68,7 +77,8 @@
       "id": "EMP009",
       "Display_ID": "EMP009",
       "Name": "Samuel Ochieng",
-      "Email": "samuel.ochieng@example.com",
+      "Email": "samuel.ochieng@gmail.com",
+      "Password": "So7#pN2kT5",
       "Department": "Data Analytics",
       "Status": "Active"
     },
@@ -76,7 +86,8 @@
       "id": "EMP010",
       "Display_ID": "EMP010",
       "Name": "Lydia Chebet",
-      "Email": "lydia.chebet@example.com",
+      "Email": "lydia.chebet@gmail.com",
+      "Password": "Lc4!yH6mB9",
       "Department": "Operations",
       "Status": "On Leave"
     },
@@ -84,7 +95,8 @@
       "id": "EMP011",
       "Display_ID": "EMP011",
       "Name": "Peter Mutua",
-      "Email": "peter.mutua@example.com",
+      "Email": "peter.mutua@gmail.com",
+      "Password": "Pm8@kD3rV1",
       "Department": "Software Engineering",
       "Status": "Active"
     },
@@ -92,7 +104,8 @@
       "id": "EMP012",
       "Display_ID": "EMP012",
       "Name": "Alice Chebet",
-      "Email": "alice.chebet@example.com",
+      "Email": "alice.chebet@gmail.com",
+      "Password": "Ac6#nF9wQ2",
       "Department": "Human Resources",
       "Status": "Active"
     },
@@ -100,7 +113,8 @@
       "id": "EMP013",
       "Display_ID": "EMP013",
       "Name": "Michael Ouma",
-      "Email": "michael.ouma@example.com",
+      "Email": "michael.ouma@gmail.com",
+      "Password": "Mo2!tX7pL5",
       "Department": "Finance",
       "Status": "Inactive"
     },
@@ -108,7 +122,8 @@
       "id": "EMP014",
       "Display_ID": "EMP014",
       "Name": "Susan Naliaka",
-      "Email": "susan.naliaka@example.com",
+      "Email": "susan.naliaka@gmail.com",
+      "Password": "Sn9@bK4vR6",
       "Department": "IT Support",
       "Status": "Active"
     },
@@ -116,7 +131,8 @@
       "id": "EMP015",
       "Display_ID": "EMP015",
       "Name": "Daniel Kipchoge",
-      "Email": "daniel.kipchoge@example.com",
+      "Email": "daniel.kipchoge@gmail.com",
+      "Password": "Dk3#yM8qH1",
       "Department": "Marketing",
       "Status": "On Leave"
     },
@@ -124,7 +140,8 @@
       "id": "EMP016",
       "Display_ID": "EMP016",
       "Name": "Mary Atieno",
-      "Email": "mary.atieno@example.com",
+      "Email": "mary.atieno@gmail.com",
+      "Password": "Ma7!pV5nC9",
       "Department": "Cybersecurity",
       "Status": "Active"
     },
@@ -132,7 +149,8 @@
       "id": "EMP017",
       "Display_ID": "EMP017",
       "Name": "Joseph Kariuki",
-      "Email": "joseph.kariuki@example.com",
+      "Email": "joseph.kariuki@gmail.com",
+      "Password": "Jk4@xR8mT2",
       "Department": "Data Analytics",
       "Status": "Active"
     },
@@ -140,7 +158,8 @@
       "id": "EMP018",
       "Display_ID": "EMP018",
       "Name": "Ann Wambui",
-      "Email": "ann.wambui@example.com",
+      "Email": "ann.wambui@gmail.com",
+      "Password": "Aw6#qL3zN7",
       "Department": "Customer Service",
       "Status": "Inactive"
     },
@@ -148,7 +167,8 @@
       "id": "EMP019",
       "Display_ID": "EMP019",
       "Name": "Samuel Maina",
-      "Email": "samuel.maina@example.com",
+      "Email": "samuel.maina@gmail.com",
+      "Password": "Sm9!kB2vP4",
       "Department": "Operations",
       "Status": "Active"
     },
@@ -156,7 +176,8 @@
       "id": "EMP020",
       "Display_ID": "EMP020",
       "Name": "Catherine Akinyi",
-      "Email": "catherine.akinyi@example.com",
+      "Email": "catherine.akinyi@gmail.com",
+      "Password": "Ca5@tN8xR1",
       "Department": "Software Engineering",
       "Status": "On Leave"
     },
@@ -164,7 +185,8 @@
       "id": "EMP021",
       "Display_ID": "EMP021",
       "Name": "Francis Mwende",
-      "Email": "francis.mwende@example.com",
+      "Email": "francis.mwende@gmail.com",
+      "Password": "Fm2#vK7qD9",
       "Department": "Human Resources",
       "Status": "Active"
     },
@@ -172,7 +194,8 @@
       "id": "EMP022",
       "Display_ID": "EMP022",
       "Name": "Beatrice Nyambura",
-      "Email": "beatrice.nyambura@example.com",
+      "Email": "beatrice.nyambura@gmail.com",
+      "Password": "Bn8!rP4mT6",
       "Department": "Finance",
       "Status": "Active"
     },
@@ -180,7 +203,8 @@
       "id": "EMP023",
       "Display_ID": "EMP023",
       "Name": "Patrick Omondi",
-      "Email": "patrick.omondi@example.com",
+      "Email": "patrick.omondi@gmail.com",
+      "Password": "Po3@xH9nL5",
       "Department": "IT Support",
       "Status": "Inactive"
     },
@@ -188,7 +212,8 @@
       "id": "EMP024",
       "Display_ID": "EMP024",
       "Name": "Diana Jepkosgei",
-      "Email": "diana.jepkosgei@example.com",
+      "Email": "diana.jepkosgei@gmail.com",
+      "Password": "Dj7#kM2vQ8",
       "Department": "Marketing",
       "Status": "Active"
     },
@@ -196,7 +221,8 @@
       "id": "EMP025",
       "Display_ID": "EMP025",
       "Name": "George Musyoka",
-      "Email": "george.musyoka@example.com",
+      "Email": "george.musyoka@gmail.com",
+      "Password": "Gm4!pR6xT1",
       "Department": "Cybersecurity",
       "Status": "On Leave"
     },
@@ -204,7 +230,8 @@
       "id": "EMP026",
       "Display_ID": "EMP026",
       "Name": "Elizabeth Moraa",
-      "Email": "elizabeth.moraa@example.com",
+      "Email": "elizabeth.moraa@gmail.com",
+      "Password": "Em9@wK3qN5",
       "Department": "Data Analytics",
       "Status": "Active"
     },
@@ -212,7 +239,8 @@
       "id": "EMP027",
       "Display_ID": "EMP027",
       "Name": "Stephen Barasa",
-      "Email": "stephen.barasa@example.com",
+      "Email": "stephen.barasa@gmail.com",
+      "Password": "Sb6#tV2mL8",
       "Department": "Customer Service",
       "Status": "Active"
     },
@@ -220,7 +248,8 @@
       "id": "EMP028",
       "Display_ID": "EMP028",
       "Name": "Nancy Wairimu",
-      "Email": "nancy.wairimu@example.com",
+      "Email": "nancy.wairimu@gmail.com",
+      "Password": "Nw3!xP7kR4",
       "Department": "Operations",
       "Status": "Inactive"
     },
@@ -228,7 +257,8 @@
       "id": "EMP029",
       "Display_ID": "EMP029",
       "Name": "Charles Kibet",
-      "Email": "charles.kibet@example.com",
+      "Email": "charles.kibet@gmail.com",
+      "Password": "Ck8@vM5qH2",
       "Department": "Software Engineering",
       "Status": "Active"
     },
@@ -236,7 +266,8 @@
       "id": "EMP030",
       "Display_ID": "EMP030",
       "Name": "Janet Muthoni",
-      "Email": "janet.muthoni@example.com",
+      "Email": "janet.muthoni@gmail.com",
+      "Password": "Jm5#rT9xB3",
       "Department": "Human Resources",
       "Status": "On Leave"
     },
@@ -244,7 +275,8 @@
       "id": "EMP031",
       "Display_ID": "EMP031",
       "Name": "Victor Odhiambo",
-      "Email": "victor.odhiambo@example.com",
+      "Email": "victor.odhiambo@gmail.com",
+      "Password": "Vo2!kL7mQ4",
       "Department": "Finance",
       "Status": "Active"
     },
@@ -252,7 +284,8 @@
       "id": "EMP032",
       "Display_ID": "EMP032",
       "Name": "Caroline Wekesa",
-      "Email": "caroline.wekesa@example.com",
+      "Email": "caroline.wekesa@gmail.com",
+      "Password": "Cw9@pN4vH6",
       "Department": "IT Support",
       "Status": "Active"
     },
@@ -260,7 +293,8 @@
       "id": "EMP033",
       "Display_ID": "EMP033",
       "Name": "Anthony Kimani",
-      "Email": "anthony.kimani@example.com",
+      "Email": "anthony.kimani@gmail.com",
+      "Password": "Ak4#xR8mT2",
       "Department": "Marketing",
       "Status": "Inactive"
     },
@@ -268,7 +302,8 @@
       "id": "EMP034",
       "Display_ID": "EMP034",
       "Name": "Ruth Adhiambo",
-      "Email": "ruth.adhiambo@example.com",
+      "Email": "ruth.adhiambo@gmail.com",
+      "Password": "Ra7!vK3qP9",
       "Department": "Cybersecurity",
       "Status": "Active"
     },
@@ -276,7 +311,8 @@
       "id": "EMP035",
       "Display_ID": "EMP035",
       "Name": "Martin Njoroge",
-      "Email": "martin.njoroge@example.com",
+      "Email": "martin.njoroge@gmail.com",
+      "Password": "Mn2@tL6xR5",
       "Department": "Data Analytics",
       "Status": "On Leave"
     },
@@ -284,7 +320,8 @@
       "id": "EMP036",
       "Display_ID": "EMP036",
       "Name": "Joyce Chepkemoi",
-      "Email": "joyce.chepkemoi@example.com",
+      "Email": "joyce.chepkemoi@gmail.com",
+      "Password": "Jc8#pM4vN1",
       "Department": "Customer Service",
       "Status": "Active"
     },
@@ -292,7 +329,8 @@
       "id": "EMP037",
       "Display_ID": "EMP037",
       "Name": "Dennis Were",
-      "Email": "dennis.were@example.com",
+      "Email": "dennis.were@gmail.com",
+      "Password": "Dw5!kR9xB2",
       "Department": "Operations",
       "Status": "Active"
     },
@@ -300,7 +338,8 @@
       "id": "EMP038",
       "Display_ID": "EMP038",
       "Name": "Monica Wanjala",
-      "Email": "monica.wanjala@example.com",
+      "Email": "monica.wanjala@gmail.com",
+      "Password": "Mw3@qT7nL6",
       "Department": "Software Engineering",
       "Status": "Inactive"
     },
@@ -308,7 +347,8 @@
       "id": "EMP039",
       "Display_ID": "EMP039",
       "Name": "Edwin Macharia",
-      "Email": "edwin.macharia@example.com",
+      "Email": "edwin.macharia@gmail.com",
+      "Password": "Em9#vP4kR1",
       "Department": "Human Resources",
       "Status": "Active"
     },
@@ -316,7 +356,8 @@
       "id": "EMP040",
       "Display_ID": "EMP040",
       "Name": "Purity Nasimiyu",
-      "Email": "purity.nasimiyu@example.com",
+      "Email": "purity.nasimiyu@gmail.com",
+      "Password": "Pn6!xK2mV8",
       "Department": "Finance",
       "Status": "On Leave"
     },
@@ -324,7 +365,8 @@
       "id": "EMP041",
       "Display_ID": "EMP041",
       "Name": "Robert Muli",
-      "Email": "robert.muli@example.com",
+      "Email": "robert.muli@gmail.com",
+      "Password": "Rm4@tQ9vL3",
       "Department": "IT Support",
       "Status": "Active"
     },
@@ -332,7 +374,8 @@
       "id": "EMP042",
       "Display_ID": "EMP042",
       "Name": "Veronica Auma",
-      "Email": "veronica.auma@example.com",
+      "Email": "veronica.auma@gmail.com",
+      "Password": "Va7#kN2pR5",
       "Department": "Marketing",
       "Status": "Active"
     },
@@ -340,7 +383,8 @@
       "id": "EMP043",
       "Display_ID": "EMP043",
       "Name": "Collins Kiprotich",
-      "Email": "collins.kiprotich@example.com",
+      "Email": "collins.kiprotich@gmail.com",
+      "Password": "Ck3!xM8qT6",
       "Department": "Cybersecurity",
       "Status": "Inactive"
     },
@@ -348,7 +392,8 @@
       "id": "EMP044",
       "Display_ID": "EMP044",
       "Name": "Esther Nyokabi",
-      "Email": "esther.nyokabi@example.com",
+      "Email": "esther.nyokabi@gmail.com",
+      "Password": "En9@vR4mK2",
       "Department": "Data Analytics",
       "Status": "Active"
     },
@@ -356,7 +401,8 @@
       "id": "EMP045",
       "Display_ID": "EMP045",
       "Name": "Brian Musau",
-      "Email": "brian.musau@example.com",
+      "Email": "brian.musau@gmail.com",
+      "Password": "Bm5#pL8xQ3",
       "Department": "Customer Service",
       "Status": "On Leave"
     },
@@ -364,7 +410,8 @@
       "id": "EMP046",
       "Display_ID": "EMP046",
       "Name": "Lilian Jepchirchir",
-      "Email": "lilian.jepchirchir@example.com",
+      "Email": "lilian.jepchirchir@gmail.com",
+      "Password": "Lj2!kT7vN9",
       "Department": "Operations",
       "Status": "Active"
     },
@@ -372,7 +419,8 @@
       "id": "EMP047",
       "Display_ID": "EMP047",
       "Name": "Moses Karanja",
-      "Email": "moses.karanja@example.com",
+      "Email": "moses.karanja@gmail.com",
+      "Password": "Mk8@xP4rD6",
       "Department": "Software Engineering",
       "Status": "Active"
     },
@@ -380,7 +428,8 @@
       "id": "EMP048",
       "Display_ID": "EMP048",
       "Name": "Irene Akinyi",
-      "Email": "irene.akinyi@example.com",
+      "Email": "irene.akinyi@gmail.com",
+      "Password": "Ia6#vW3mN7",
       "Department": "Human Resources",
       "Status": "Inactive"
     },
@@ -388,7 +437,8 @@
       "id": "EMP049",
       "Display_ID": "EMP049",
       "Name": "Caleb Kiprono",
-      "Email": "caleb.kiprono@example.com",
+      "Email": "caleb.kiprono@gmail.com",
+      "Password": "Ck4!tR8xM2",
       "Department": "Finance",
       "Status": "Active"
     },
@@ -396,7 +446,8 @@
       "id": "EMP050",
       "Display_ID": "EMP050",
       "Name": "Faith Wambura",
-      "Email": "faith.wambura@example.com",
+      "Email": "faith.wambura@gmail.com",
+      "Password": "Fw7@pN3vL5",
       "Department": "IT Support",
       "Status": "On Leave"
     }

@@ -1,27 +1,27 @@
 import { NgClass } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import {MatPaginator,PageEvent} from '@angular/material/paginator';
-import {MatSortModule,Sort} from '@angular/material/sort';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSortModule, Sort } from '@angular/material/sort';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormBuilder,Validator } from '@angular/forms';
+import { FormBuilder, Validator } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { Employee } from '../../interface/employee';
 
 @Component({
   selector: 'app-home',
-  imports: [NgClass, MatPaginator, MatSortModule,ReactiveFormsModule],
+  imports: [NgClass, MatPaginator, MatSortModule, ReactiveFormsModule],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 
 export class Home {
   http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3001/employees';
+  private apiUrl = 'http://localhost:3002/employees';
   employees: Employee[] = []
   loading = false
   errorMessage = ''
-    constructor() {
+  constructor() {
     this.loadEmployees();
   }
   getEmployees() {
@@ -40,15 +40,15 @@ export class Home {
     });
   }
   // Search
-searchTerm = '';
-// Filters
-selectedDepartment = 'all';
-selectedStatus = 'all';
+  searchTerm = '';
+  // Filters
+  selectedDepartment = 'all';
+  selectedStatus = 'all';
 
-// Get unique departments from employee data
-get departments() {
-  return [...new Set(this.employees.map(emp => emp.Department))];
-}
+  // Get unique departments from employee data
+  get departments() {
+    return [...new Set(this.employees.map(emp => emp.Department))];
+  }
 
   private fb = inject(FormBuilder);
 
@@ -134,7 +134,7 @@ get departments() {
     // Check for duplicate email, excluding the employee being edited
     const duplicateEmail = this.employees.some(employee =>
       employee.Email.trim().toLowerCase() ===
-        value.Email.trim().toLowerCase() &&
+      value.Email.trim().toLowerCase() &&
       employee.id !== this.selectedEmployee?.id
     );
 
@@ -155,7 +155,8 @@ get departments() {
       const newEmployee: Employee = {
         id,
         Display_ID: id,
-        ...value
+        ...value,
+        Password: ''
       };
 
       this.http.post<Employee>(this.apiUrl, newEmployee).subscribe({
@@ -223,44 +224,44 @@ get departments() {
     });
   }
 
-// Filter employees using search and dropdown filters
-get filteredEmployees() {
-  const search = this.searchTerm.toLowerCase().trim();
+  // Filter employees using search and dropdown filters
+  get filteredEmployees() {
+    const search = this.searchTerm.toLowerCase().trim();
 
-  return this.employees.filter(emp => {
-    const matchesSearch =
-      emp.Display_ID.toLowerCase().includes(search) ||
-      emp.Name.toLowerCase().includes(search) ||
-      emp.Email.toLowerCase().includes(search) ||
-      emp.Department.toLowerCase().includes(search);
+    return this.employees.filter(emp => {
+      const matchesSearch =
+        emp.Display_ID.toLowerCase().includes(search) ||
+        emp.Name.toLowerCase().includes(search) ||
+        emp.Email.toLowerCase().includes(search) ||
+        emp.Department.toLowerCase().includes(search);
 
-    const matchesDepartment =
-      this.selectedDepartment === 'all' ||
-      emp.Department === this.selectedDepartment;
+      const matchesDepartment =
+        this.selectedDepartment === 'all' ||
+        emp.Department === this.selectedDepartment;
 
-    const matchesStatus =
-      this.selectedStatus === 'all' ||
-      emp.Status === this.selectedStatus;
+      const matchesStatus =
+        this.selectedStatus === 'all' ||
+        emp.Status === this.selectedStatus;
 
-    return matchesSearch && matchesDepartment && matchesStatus;
-  });
-}
+      return matchesSearch && matchesDepartment && matchesStatus;
+    });
+  }
 
-// Reset pagination when search or filters change
-onSearch(event: Event) {
-  this.searchTerm = (event.target as HTMLInputElement).value;
-  this.pageIndex = 0;
-}
+  // Reset pagination when search or filters change
+  onSearch(event: Event) {
+    this.searchTerm = (event.target as HTMLInputElement).value;
+    this.pageIndex = 0;
+  }
 
-onDepartmentChange(event: Event) {
-  this.selectedDepartment = (event.target as HTMLSelectElement).value;
-  this.pageIndex = 0;
-}
+  onDepartmentChange(event: Event) {
+    this.selectedDepartment = (event.target as HTMLSelectElement).value;
+    this.pageIndex = 0;
+  }
 
-onStatusChange(event: Event) {
-  this.selectedStatus = (event.target as HTMLSelectElement).value;
-  this.pageIndex = 0;
-}
+  onStatusChange(event: Event) {
+    this.selectedStatus = (event.target as HTMLSelectElement).value;
+    this.pageIndex = 0;
+  }
 
   pageSize = 10;
   pageIndex = 0;
@@ -270,28 +271,28 @@ onStatusChange(event: Event) {
     direction: 'asc'
   };
 
-get paginatedEmployees() {
-  const data = [...this.filteredEmployees];
+  get paginatedEmployees() {
+    const data = [...this.filteredEmployees];
 
-  if (this.sortState.direction) {
-    const { active, direction } = this.sortState;
+    if (this.sortState.direction) {
+      const { active, direction } = this.sortState;
 
-    data.sort((a, b) => {
-      const result = String(a[active as keyof typeof a])
-        .localeCompare(
-          String(b[active as keyof typeof b]),
-          undefined,
-          { numeric: true, sensitivity: 'base' }
-        );
+      data.sort((a, b) => {
+        const result = String(a[active as keyof typeof a])
+          .localeCompare(
+            String(b[active as keyof typeof b]),
+            undefined,
+            { numeric: true, sensitivity: 'base' }
+          );
 
-      return direction === 'asc' ? result : -result;
-    });
+        return direction === 'asc' ? result : -result;
+      });
+    }
+
+    const startIndex = this.pageIndex * this.pageSize;
+
+    return data.slice(startIndex, startIndex + this.pageSize);
   }
-
-  const startIndex = this.pageIndex * this.pageSize;
-
-  return data.slice(startIndex, startIndex + this.pageSize);
-}
 
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;

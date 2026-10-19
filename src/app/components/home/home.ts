@@ -28,17 +28,32 @@ export class Home {
     return this.http.get<Employee[]>(this.apiUrl);
   }
 
-  loadEmployees(): void {
-    this.http.get<Employee[]>(this.apiUrl).subscribe({
-      next: (data) => {
-        this.employees = data;
-      },
-      error: (error) => {
-        console.error('Failed to load employees:', error);
-        this.formError = 'Unable to load employees.';
+ 
+loadEmployees(): void {
+  this.http.get<Employee[]>(this.apiUrl).subscribe({
+    next: (data) => {
+      this.employees = data;
+
+      localStorage.setItem(
+        'employees',
+        JSON.stringify(data)
+      );
+    },
+    error: (error) => {
+      console.error('Failed to load employees:', error);
+
+      // Fallback to locally cached records if the server is unavailable.
+      const cachedEmployees = localStorage.getItem('employees');
+
+      if (cachedEmployees) {
+        this.employees = JSON.parse(cachedEmployees) as Employee[];
       }
-    });
-  }
+
+      this.formError = 'Unable to load employees from the server.';
+    }
+  });
+}
+
   // Search
   searchTerm = '';
   // Filters

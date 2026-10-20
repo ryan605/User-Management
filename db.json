@@ -458,6 +458,15 @@
       "Password": "password",
       "Department": "Software Engineering",
       "Status": "On Leave"
+    },
+    {
+      "id": "Yheul5W41rA",
+      "Display_ID": "EMP052",
+      "Name": "Ryan otis",
+      "Email": "otis@gmail.com",
+      "Password": "password",
+      "Department": "Cybersecurity",
+      "Status": "On Leave"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

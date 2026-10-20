@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { EmployeeService } from '../../services/employee';
 
@@ -13,11 +13,12 @@ import { EmployeeService } from '../../services/employee';
 })
 export class LoginPage {
   private employeeService = inject(EmployeeService)
+  private fb = inject(FormBuilder);
   http = inject(HttpClient)
   router = inject(Router)
-  loginForm: FormGroup = new FormGroup({
-    Email: new FormControl("",Validators.required),
-    Password: new FormControl("",Validators.required)
+  loginForm = this.fb.nonNullable.group({
+   Email: ['', [Validators.required, Validators.email]],
+  Password: ['', [Validators.required, Validators.minLength(8)]],
   })
 
 onLogin() {
@@ -32,7 +33,7 @@ onLogin() {
     next: (employees) => {
       const employee = employees.find((emp) => {
         return (
-          emp.Email.toLowerCase() === Email.trim().toLowerCase() &&
+          emp.Email.toLowerCase() === Email!.trim().toLowerCase() &&
           emp.Password === Password
         );
       });

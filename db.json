@@ -467,6 +467,33 @@
       "Password": "password",
       "Department": "Cybersecurity",
       "Status": "On Leave"
+    },
+    {
+      "id": "h1Kk5czKVVU",
+      "Display_ID": "EMP053",
+      "Name": "Ryan langat",
+      "Email": "rwwwrrw@g",
+      "Department": "Software Engineering",
+      "Status": "Active",
+      "Password": ""
+    },
+    {
+      "id": "Bu_nYQ14BJ4",
+      "Display_ID": "EMP054",
+      "Name": "brian otieno",
+      "Email": "wfefw@f",
+      "Department": "Human Resources",
+      "Status": "Active",
+      "Password": ""
+    },
+    {
+      "id": "zJ7bTxxutEk",
+      "Display_ID": "EMP055",
+      "Name": "dada",
+      "Email": "adad@g",
+      "Department": "Human Resources",
+      "Status": "Active",
+      "Password": ""
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

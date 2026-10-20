@@ -25,6 +25,9 @@
   <button type="button" class="btn-add" (click)="openAddForm()">
   + Add User
 </button>
+<button type="button" class="btn-logout" (click)="logout()">
+  Logout
+</button>
 
 </div>
 
@@ -67,8 +70,10 @@
           <button type="button" class="btn-edit" (click)="openEditForm(item)">
             Edit
           </button>
-
-          <button type="button" class="btn-delete" (click)="deleteEmployee(item)">
+          <button
+            type="button"
+            class="btn-delete"
+            (click)="requestDeleteEmployee(item)">
             Delete
           </button>
         </td>
@@ -206,6 +211,50 @@
     }
   </section>
 </div>
+}
+@if (showDeleteModal && employeeToDelete) {
+  <div class="modal-backdrop delete-backdrop">
+    <section
+      class="delete-modal"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="delete-title"
+      aria-describedby="delete-description">
+
+      <div class="delete-icon">!</div>
+
+      <h2 id="delete-title">Delete Employee?</h2>
+
+      <p id="delete-description">
+        Are you sure you want to delete
+        <strong>{{ employeeToDelete.Name }}</strong>?
+        This action cannot be undone.
+      </p>
+
+      @if (deleteError) {
+        <p class="field-error">{{ deleteError }}</p>
+      }
+
+      <div class="delete-actions">
+        <button
+          type="button"
+          class="btn-cancel"
+          (click)="cancelDelete()"
+          [disabled]="deleting">
+          Cancel
+        </button>
+
+        <button
+          type="button"
+          class="btn-delete"
+          (click)="confirmDeleteEmployee()"
+          [disabled]="deleting">
+          {{ deleting ? 'Deleting...' : 'Yes, Delete' }}
+        </button>
+      </div>
+
+    </section>
+  </div>
 }
 <div class="paginator-container">
   <mat-paginator [length]="employees.length" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 20]"

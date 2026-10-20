@@ -7,6 +7,7 @@ import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormBuilder, Validator } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { Employee } from '../../interface/employee';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,10 @@ export class Home {
   employees: Employee[] = []
   loading = false
   errorMessage = ''
+  showDeleteModal = false;
+  employeeToDelete: Employee | null = null;
+  deleting = false;
+  deleteError = '';
   constructor() {
     this.loadEmployees();
   }
@@ -114,11 +119,18 @@ loadEmployees(): void {
     this.modalMode = 'view';
   }
 
-  closeModal(): void {
-    this.modalMode = null;
-    this.selectedEmployee = null;
-    this.formError = '';
-  }
+ closeModal(): void {
+  this.modalMode = null;
+  this.selectedEmployee = null;
+  this.formError = '';
+  this.saving = false;
+  this.employeeForm.reset({
+    Name: '',
+    Email: '',
+    Department: '',
+    Status: 'Active'
+  });
+}
 
   // Mark fields as touched to display validation errors
   private markFormTouched(): void {
@@ -136,108 +148,146 @@ loadEmployees(): void {
   }
 
   // Add or update an employee
-  saveEmployee(): void {
-    this.markFormTouched();
-    this.formError = '';
+  
+saveEmployee(): void {
+  this.markFormTouched();
+  this.formError = '';
 
-    if (this.employeeForm.invalid) {
-      return;
-    }
-
-    const value = this.employeeForm.getRawValue();
-
-    // Check for duplicate email, excluding the employee being edited
-    const duplicateEmail = this.employees.some(employee =>
-      employee.Email.trim().toLowerCase() ===
-      value.Email.trim().toLowerCase() &&
-      employee.id !== this.selectedEmployee?.id
-    );
-
-    if (duplicateEmail) {
-      this.employeeForm.controls.Email.setErrors({
-        ...this.employeeForm.controls.Email.errors,
-        duplicate: true
-      });
-      this.employeeForm.controls.Email.markAsTouched();
-      return;
-    }
-
-    this.saving = true;
-
-    if (this.modalMode === 'add') {
-      const id = this.generateEmployeeId();
-
-      const newEmployee: Employee = {
-        id,
-        Display_ID: id,
-        ...value,
-        Password: ''
-      };
-
-      this.http.post<Employee>(this.apiUrl, newEmployee).subscribe({
-        next: () => {
-          this.loadEmployees();
-          this.closeModal();
-          this.saving = false;
-          this.pageIndex = 0;
-        },
-        error: () => {
-          this.formError = 'Unable to add employee. Please try again.';
-          this.saving = false;
-        }
-      });
-    } else if (
-      this.modalMode === 'edit' &&
-      this.selectedEmployee
-    ) {
-      const updatedEmployee: Employee = {
-        ...this.selectedEmployee,
-        ...value
-      };
-
-      this.http.put<Employee>(
-        `${this.apiUrl}/${encodeURIComponent(this.selectedEmployee.id)}`,
-        updatedEmployee
-      ).subscribe({
-        next: () => {
-          this.loadEmployees();
-          this.closeModal();
-          this.saving = false;
-        },
-        error: () => {
-          this.formError = 'Unable to update employee. Please try again.';
-          this.saving = false;
-        }
-      });
-    }
+  if (this.employeeForm.invalid) {
+    return;
   }
 
-  // Delete with confirmation
-  deleteEmployee(employee: Employee): void {
-    const confirmed = window.confirm(
-      `Are you sure you want to delete ${employee.Name}?`
-    );
+  const value = this.employeeForm.getRawValue();
 
-    if (!confirmed) {
-      return;
+  // Check for duplicate email
+  const duplicateEmail = this.employees.some(employee =>
+    employee.Email.trim().toLowerCase() ===
+      value.Email.trim().toLowerCase() &&
+    employee.id !== this.selectedEmployee?.id
+  );
+
+  if (duplicateEmail) {
+    this.employeeForm.controls.Email.setErrors({
+      ...this.employeeForm.controls.Email.errors,
+      duplicate: true
+    });
+
+    this.employeeForm.controls.Email.markAsTouched();
+    return;
+  }
+
+  this.saving = true;
+
+  if (this.modalMode === 'add') {
+    const id = this.generateEmployeeId();
+
+    const newEmployee: Employee = {
+      id,
+      Display_ID: id,
+      ...value,
+      Password: ''
+    };
+
+    this.http.post<Employee>(this.apiUrl, newEmployee)
+  .pipe(
+    finalize(() => {
+      this.saving = false;
+    })
+  )
+  .subscribe({
+    next: (createdEmployee) => {
+      console.log('Employee created successfully:', createdEmployee);
+
+      this.closeModal();
+      this.pageIndex = 0;
+      this.loadEmployees();
+    },
+    error: (error) => {
+      console.error('Failed to create employee:', error);
+      this.formError = 'Unable to add employee. Please try again.';
     }
+  });
 
-    this.http.delete(
-      `${this.apiUrl}/${encodeURIComponent(employee.id)}`
+  } else if (
+    this.modalMode === 'edit' &&
+    this.selectedEmployee
+  ) {
+    const updatedEmployee: Employee = {
+      ...this.selectedEmployee,
+      ...value
+    };
+
+    this.http.put<Employee>(
+      `${this.apiUrl}/${encodeURIComponent(this.selectedEmployee.id)}`,
+      updatedEmployee
     ).subscribe({
       next: () => {
+        this.saving = false;
+        this.closeModal();
         this.loadEmployees();
-
-        if (this.pageIndex > 0 && this.paginatedEmployees.length <= 1) {
-          this.pageIndex--;
-        }
       },
       error: (error) => {
-        console.error('Error deleting employee:', error);
-        this.formError = 'Unable to delete employee. Please try again.';
+        console.error('Error updating employee:', error);
+        this.formError = 'Unable to update employee. Please try again.';
+        this.saving = false;
       }
     });
+  } else {
+    this.saving = false;
   }
+}
+
+
+  // Delete with confirmation
+requestDeleteEmployee(employee: Employee): void {
+  this.employeeToDelete = employee;
+  this.deleteError = '';
+  this.showDeleteModal = true;
+}
+
+cancelDelete(): void {
+  if (this.deleting) {
+    return;
+  }
+
+  this.showDeleteModal = false;
+  this.employeeToDelete = null;
+  this.deleteError = '';
+}
+
+confirmDeleteEmployee(): void {
+  if (!this.employeeToDelete || this.deleting) {
+    return;
+  }
+
+  const employee = this.employeeToDelete;
+  this.deleting = true;
+  this.deleteError = '';
+
+  this.http.delete(
+    `${this.apiUrl}/${encodeURIComponent(employee.id)}`
+  ).subscribe({
+    next: () => {
+      this.showDeleteModal = false;
+      this.employeeToDelete = null;
+      this.deleting = false;
+
+      this.loadEmployees();
+
+      if (
+        this.pageIndex > 0 &&
+        this.paginatedEmployees.length <= 1
+      ) {
+        this.pageIndex--;
+      }
+    },
+    error: (error) => {
+      console.error('Error deleting employee:', error);
+      this.deleteError = 'Unable to delete employee. Please try again.';
+      this.deleting = false;
+    }
+  });
+}
 
   // Filter employees using search and dropdown filters
   get filteredEmployees() {
@@ -285,7 +335,18 @@ loadEmployees(): void {
     active: 'Display_ID',
     direction: 'asc'
   };
+    private router = inject(Router);
 
+    logout(): void {
+    // Clear authentication data only.
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+
+    this.router.navigate(['/login']);
+    }
   get paginatedEmployees() {
     const data = [...this.filteredEmployees];
 

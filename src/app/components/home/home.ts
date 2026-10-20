@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
@@ -19,6 +19,8 @@ import { Router } from '@angular/router';
 export class Home {
   http = inject(HttpClient);
   private apiUrl = 'http://localhost:3002/employees';
+
+  private cdr = inject(ChangeDetectorRef);
   employees: Employee[] = []
   loading = false
   errorMessage = ''
@@ -255,6 +257,8 @@ cancelDelete(): void {
   this.deleteError = '';
 }
 
+
+
 confirmDeleteEmployee(): void {
   if (!this.employeeToDelete || this.deleting) {
     return;
@@ -266,28 +270,31 @@ confirmDeleteEmployee(): void {
 
   this.http.delete(
     `${this.apiUrl}/${encodeURIComponent(employee.id)}`
+  ).pipe(
+    finalize(() => {
+      this.deleting = false;
+    })
   ).subscribe({
     next: () => {
       this.showDeleteModal = false;
       this.employeeToDelete = null;
+      this.deleteError = '';
       this.deleting = false;
 
-      this.loadEmployees();
+      // Immediately update the view
+      this.cdr.detectChanges();
 
-      if (
-        this.pageIndex > 0 &&
-        this.paginatedEmployees.length <= 1
-      ) {
-        this.pageIndex--;
-      }
+      // Refresh the employee list
+      this.loadEmployees();
     },
     error: (error) => {
       console.error('Error deleting employee:', error);
       this.deleteError = 'Unable to delete employee. Please try again.';
-      this.deleting = false;
     }
   });
 }
+
+
 
   // Filter employees using search and dropdown filters
   get filteredEmployees() {

@@ -1,69 +1,6 @@
 {
   "employees": [
     {
-      "id": "EMP001",
-      "Display_ID": "EMP001",
-      "Name": "John Kamau",
-      "Email": "test@gmail.com",
-      "Password": "password",
-      "Department": "Software Engineering",
-      "Status": "Active"
-    },
-    {
-      "id": "EMP002",
-      "Display_ID": "EMP002",
-      "Name": "Grace Wanjiku",
-      "Email": "grace.wanjiku@gmail.com",
-      "Password": "Gw4@rT8nL3",
-      "Department": "Human Resources",
-      "Status": "Active"
-    },
-    {
-      "id": "EMP003",
-      "Display_ID": "EMP003",
-      "Name": "Brian Otieno",
-      "Email": "brian.otieno@gmail.com",
-      "Password": "Bo9#xK5pM2",
-      "Department": "Finance",
-      "Status": "Inactive"
-    },
-    {
-      "id": "EMP004",
-      "Display_ID": "EMP004",
-      "Name": "Faith Njeri",
-      "Email": "faith.njeri@gmail.com",
-      "Password": "Fn6!bR3wY8",
-      "Department": "IT Support",
-      "Status": "Active"
-    },
-    {
-      "id": "EMP005",
-      "Display_ID": "EMP005",
-      "Name": "Kevin Mwangi",
-      "Email": "kevin.mwangi@gmail.com",
-      "Password": "Km2@zP7dH4",
-      "Department": "Software Engineering",
-      "Status": "On Leave"
-    },
-    {
-      "id": "EMP006",
-      "Display_ID": "EMP006",
-      "Name": "Mercy Achieng",
-      "Email": "mercy.achieng@gmail.com",
-      "Password": "Ma8#tL4qN6",
-      "Department": "Marketing",
-      "Status": "Active"
-    },
-    {
-      "id": "EMP007",
-      "Display_ID": "EMP007",
-      "Name": "David Kiptoo",
-      "Email": "david.kiptoo@gmail.com",
-      "Password": "Dk5!vW9sC2",
-      "Department": "Cybersecurity",
-      "Status": "Active"
-    },
-    {
       "id": "EMP008",
       "Display_ID": "EMP008",
       "Name": "Esther Muthoni",

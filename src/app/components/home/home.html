@@ -22,11 +22,13 @@
     <option value="Inactive">Inactive</option>
     <option value="On Leave">On Leave</option>
   </select>
-
-</div>
-<button type="button" class="btn-add" (click)="openAddForm()">
+  <button type="button" class="btn-add" (click)="openAddForm()">
   + Add User
 </button>
+
+</div>
+
+
 <div class="table-div">
   <table class="table" matSort [matSortActive]="sortState.active" [matSortDirection]="sortState.direction"
     (matSortChange)="onSortChange($event)">
@@ -205,7 +207,8 @@
   </section>
 </div>
 }
-
-<mat-paginator [length]="employees.length" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 20]"
+<div class="paginator-container">
+  <mat-paginator [length]="employees.length" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 20]"
   (page)="onPageChange($event)" showFirstLastButtons aria-label="Select employee page">
 </mat-paginator>
+</div>
